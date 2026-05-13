@@ -29,6 +29,7 @@ void	philo_sleep_think(t_philo *philo)
 	print_status(philo, "is sleeping");
 	ft_msleep(philo->data->time_to_sleep, philo->data);
 	print_status(philo, "is thinking");
+	usleep(500); 
 }
 
 void	*philo_routine(void *arg)
@@ -41,6 +42,8 @@ void	*philo_routine(void *arg)
 		single_philo_routine(philo);
 		return (NULL);
 	}
+	if (philo->id % 2 == 0)
+		ft_msleep(10, philo->data);
 	while (!check_simulation_stop(philo->data))
 	{
 		philo_eat(philo);
