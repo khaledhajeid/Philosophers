@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kal-haj- <kal-haj-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/15 17:25:09 by kal-haj-          #+#    #+#             */
+/*   Updated: 2026/06/15 17:25:37 by kal-haj-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -36,7 +48,6 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
 }	t_data;
-
 
 int		parse_args(t_data *data, int argc, char **argv);
 void	clean_exit(t_data *data);

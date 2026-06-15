@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   routine.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kal-haj- <kal-haj-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/15 17:23:49 by kal-haj-          #+#    #+#             */
+/*   Updated: 2026/06/15 17:25:54 by kal-haj-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static void	single_philo_routine(t_philo *philo)
@@ -29,7 +41,7 @@ void	philo_sleep_think(t_philo *philo)
 	print_status(philo, "is sleeping");
 	ft_msleep(philo->data->time_to_sleep, philo->data);
 	print_status(philo, "is thinking");
-	usleep(500); 
+	usleep(500);
 }
 
 void	*philo_routine(void *arg)
