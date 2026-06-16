@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kal-haj- <kal-haj-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: khaledhajeid <khaledhajeid@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/15 17:23:46 by kal-haj-          #+#    #+#             */
-/*   Updated: 2026/06/15 17:24:45 by kal-haj-         ###   ########.fr       */
+/*   Updated: 2026/06/16 16:23:46 by khaledhajei      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,37 @@ static int	check_all_ate(t_data *data)
 	return (0);
 }
 
+static int	check_any_dead(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->philo_count)
+	{
+		if (check_death(&data->philos[i]))
+		{
+			pthread_mutex_lock(&data->state_lock);
+			data->sim_stop = 1;
+			pthread_mutex_unlock(&data->state_lock);
+			pthread_mutex_lock(&data->write_lock);
+			printf("%ld %d died\n",
+				get_time_ms() - data->start_time, data->philos[i].id);
+			pthread_mutex_unlock(&data->write_lock);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void	*monitor_routine(void *arg)
 {
 	t_data	*data;
-	int		i;
 
 	data = (t_data *)arg;
 	while (1)
 	{
-		i = -1;
-		while (++i < data->philo_count)
-		{
-			if (check_death(&data->philos[i]))
-			{
-				pthread_mutex_lock(&data->state_lock);
-				data->sim_stop = 1;
-				pthread_mutex_unlock(&data->state_lock);
-				pthread_mutex_lock(&data->write_lock);
-				printf("%ld %d died\n",
-					get_time_ms() - data->start_time, data->philos[i].id);
-				pthread_mutex_unlock(&data->write_lock);
-				return (NULL);
-			}
-		}
+		if (check_any_dead(data))
+			return (NULL);
 		if (check_all_ate(data))
 		{
 			pthread_mutex_lock(&data->state_lock);
